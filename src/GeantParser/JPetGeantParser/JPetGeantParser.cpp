@@ -253,6 +253,29 @@ void JPetGeantParser::processMCEvent(JPetGeantEventPack* evPack)
   bool isGen2g = evPack->GetEventInformation()->GetTwoGammaGen();
   bool isGen3g = evPack->GetEventInformation()->GetThreeGammaGen();
 
+  if (evPack->GetNumberOfDecayTrees() > 0) {
+    int test;
+    std::cout << "DT Number " << evPack->GetNumberOfDecayTrees() << std::endl;
+    JPetGeantDecayTree* tempTree = evPack->GetDecayTree(0);
+    std::cout << "Event Number " << tempTree->GetEventNumber() << std::endl;
+    std::cout << "Decay Channel " << tempTree->GetDecayChannel() << std::endl;
+    std::map<int, int> TBCon = tempTree->GetTrackBranchConnections();
+    std::cout << "Num Branch: " << tempTree->GetNumberOfBranches() << std::endl;
+    if (!TBCon.empty()) {
+      for (std::map<int, int>::iterator it = TBCon.begin(); it != TBCon.end(); it++) {
+        std::cout << it->first << " - " << it->second << std::endl;
+        Branch tempBranch = tempTree->GetBranch(it->first);
+        std::cout << "TrackID " << it->first << std::endl;
+        std::cout << "TrackID from branch " << tempBranch.GetTrackID() << std::endl;
+        std::cout << "PrimaryNode from branch " << tempBranch.GetPrimaryNodeID() << std::endl;
+        std::cout << "NodeNumber from branch " << tempBranch.GetNumberOfNodes() << std::endl;
+      }
+    }
+    else
+      std::cout << "B" << std::endl;
+    std::cin >> test;
+  }
+  
   float timeShift = getNextTimeShift();
   for (unsigned int i = 0; i < evPack->GetNumberOfHits(); i++)
   {

@@ -88,12 +88,12 @@ bool JPetUnpackTask::run(const JPetDataInterface&)
   {
 
     int refChannelOffset = 105;
-    Unpacker2D unpacker2D;
+ //   Unpacker2D unpacker2D;
 
     INFO(Form("Using Unpacker2D to process first %i events", fEventsToProcess));
 
-    unpacker2D.UnpackSingleStep(fInputFile, fInputFilePath, fOutputFilePath, fXMLConfFile, fEventsToProcess, refChannelOffset,
-                                fTDCnonlinearityCalibFile);
+ //   unpacker2D.UnpackSingleStep(fInputFile, fInputFilePath, fOutputFilePath, fXMLConfFile, fEventsToProcess, refChannelOffset,
+  //                              fTDCnonlinearityCalibFile);
   }
   else
   {
