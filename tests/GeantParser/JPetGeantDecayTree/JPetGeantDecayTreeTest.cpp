@@ -21,7 +21,7 @@
 
 BOOST_AUTO_TEST_SUITE(FirstSuite)
 
-BOOST_AUTO_TEST_CASE(branch_default_constructor)
+/*BOOST_AUTO_TEST_CASE(branch_default_constructor)
 {
   int testID = -1;
   
@@ -136,6 +136,6 @@ BOOST_AUTO_TEST_CASE(check_decayTree_creation_and_getting_branch)
   BOOST_REQUIRE_EQUAL(thirdBranch.GetLastNodeID(), fifthNodeID);
   BOOST_REQUIRE_EQUAL(thirdBranch.GetPreviousNodeID(fifthNodeID), fifthNodeID);
   BOOST_REQUIRE_EQUAL(thirdBranch.GetInteractionType(fifthNodeID), fifthInteractionType);
-}
+}*/
 
 BOOST_AUTO_TEST_SUITE_END()

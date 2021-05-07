@@ -1,5 +1,5 @@
 /**
- *  @copyright Copyright 2018 The J-PET Framework Authors. All rights reserved.
+ *  @copyright Copyright 2021 The J-PET Framework Authors. All rights reserved.
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may find a copy of the License in the LICENCE file.
@@ -196,12 +196,14 @@ bool JPetGeantParser::exec()
     if (fProcessSingleEventinWindow)
     {
       saveHits();
+      saveDecayTrees();
     }
     else
     {
       if (isTimeWindowFull())
       {
         saveHits();
+        saveDecayTrees();
         clearTimeDistoOfDecays();
         std::tie(fTimeDistroOfDecays, fTimeDiffDistro) = JPetGeantParserTools::getTimeDistoOfDecays(fSimulatedActivity, fMinTime, fMaxTime);
       }
@@ -237,7 +239,19 @@ bool JPetGeantParser::terminate()
 
 void JPetGeantParser::processMCEvent(JPetGeantEventPack* evPack)
 {
-
+  unsigned int numberOfDecTrees = evPack->GetNumberOfDecayTrees();
+  
+  for (unsigned int i=0; i<numberOfDecTrees; i++) {
+    JPetGeantDecayTree* geantDecayTree = evPack->GetDecayTree(i);
+    JPetMCDecayTree mcGecayTree = JPetMCDecayTree(geantDecayTree);
+    
+    fStoredMCDecayTrees.push_back(mcGecayTree);
+    fDecayTreeIndex++;
+    //Note for future. If there will be more than once decay tree created in an event 
+    //(different types of decays simulated) Index would need to be adjusted so to connect a proper
+    //index to a proper hit (maybe based on evtID)
+  }
+    
   bool isRecPrompt = false;
   std::array<bool, 2> isSaved2g{false, false};
   std::array<bool, 3> isSaved3g{false, false, false};
@@ -252,36 +266,13 @@ void JPetGeantParser::processMCEvent(JPetGeantEventPack* evPack)
   bool isGenPrompt = evPack->GetEventInformation()->GetPromptGammaGen();
   bool isGen2g = evPack->GetEventInformation()->GetTwoGammaGen();
   bool isGen3g = evPack->GetEventInformation()->GetThreeGammaGen();
-
-  if (evPack->GetNumberOfDecayTrees() > 0) {
-    int test;
-    std::cout << "DT Number " << evPack->GetNumberOfDecayTrees() << std::endl;
-    JPetGeantDecayTree* tempTree = evPack->GetDecayTree(0);
-    std::cout << "Event Number " << tempTree->GetEventNumber() << std::endl;
-    std::cout << "Decay Channel " << tempTree->GetDecayChannel() << std::endl;
-    std::map<int, int> TBCon = tempTree->GetTrackBranchConnections();
-    std::cout << "Num Branch: " << tempTree->GetNumberOfBranches() << std::endl;
-    if (!TBCon.empty()) {
-      for (std::map<int, int>::iterator it = TBCon.begin(); it != TBCon.end(); it++) {
-        std::cout << it->first << " - " << it->second << std::endl;
-        Branch tempBranch = tempTree->GetBranch(it->first);
-        std::cout << "TrackID " << it->first << std::endl;
-        std::cout << "TrackID from branch " << tempBranch.GetTrackID() << std::endl;
-        std::cout << "PrimaryNode from branch " << tempBranch.GetPrimaryNodeID() << std::endl;
-        std::cout << "NodeNumber from branch " << tempBranch.GetNumberOfNodes() << std::endl;
-      }
-    }
-    else
-      std::cout << "B" << std::endl;
-    std::cin >> test;
-  }
   
   float timeShift = getNextTimeShift();
   for (unsigned int i = 0; i < evPack->GetNumberOfHits(); i++)
   {
 
     // translate geantHit -> JPetMCHit
-    JPetMCHit mcHit = JPetGeantParserTools::createJPetMCHit(evPack->GetHit(i), getParamBank());
+    JPetMCHit mcHit = JPetGeantParserTools::createJPetMCHit(evPack->GetHit(i), fDecayTreeIndex, getParamBank());
 
     if (fMakeHisto)
       fillHistoMCGen(mcHit);
@@ -352,8 +343,6 @@ void JPetGeantParser::processMCEvent(JPetGeantEventPack* evPack)
     if (isRec3g)
       n3gRec++;
   }
-
-  //    // add loop processing DecayTree
 }
 
 void JPetGeantParser::saveReconstructedHit(JPetHit recHit)
@@ -423,6 +412,21 @@ void JPetGeantParser::saveHits()
 
   fStoredMCHits.clear();
   fStoredHits.clear();
+}
+
+void JPetGeantParser::saveDecayTrees()
+{
+  std::cout << fStoredMCDecayTrees.size() << std::endl;
+  for (unsigned i=0; i<fStoredMCDecayTrees.size(); i++) {
+    std::cout << fStoredMCDecayTrees.at(i).GetEventNumber() << std::endl;
+  }
+  for (const auto& mcDecayTree : fStoredMCDecayTrees)
+  {
+    std::cout << "p" << std::endl;
+    dynamic_cast<JPetTimeWindowMC*>(fOutputEvents)->addDecayTree<JPetMCDecayTree>(mcDecayTree);
+  }
+  
+  fStoredMCDecayTrees.clear();
 }
 
 void JPetGeantParser::fillHistoMCGen(JPetMCHit& mcHit)

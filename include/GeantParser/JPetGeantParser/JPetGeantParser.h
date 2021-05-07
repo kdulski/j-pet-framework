@@ -1,5 +1,5 @@
 /**
- *  @copyright Copyright 2018 The J-PET Framework Authors. All rights reserved.
+ *  @copyright Copyright 2021 The J-PET Framework Authors. All rights reserved.
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may find a copy of the License in the LICENCE file.
@@ -16,14 +16,14 @@
 #ifndef JPETGEANTPARSER_H
 #define JPETGEANTPARSER_H
 
+#include <JPetSmearingFunctions/JPetSmearingFunctions.h>
 #include <JPetGeantEventPack/JPetGeantEventPack.h>
 #include <JPetGeantScinHits/JPetGeantScinHits.h>
 #include <JPetGeomMapping/JPetGeomMapping.h>
-#include <JPetHit/JPetHit.h>
 #include <JPetMCDecayTree/JPetMCDecayTree.h>
-#include <JPetMCHit/JPetMCHit.h>
-#include <JPetSmearingFunctions/JPetSmearingFunctions.h>
 #include <JPetUserTask/JPetUserTask.h>
+#include <JPetMCHit/JPetMCHit.h>
+#include <JPetHit/JPetHit.h>
 #include <functional>
 #include <map>
 #include <tuple>
@@ -90,16 +90,19 @@ protected:
 
   const std::string kSeedParamKey = "GeantParser_Seed_int";
 
+  long fDecayTreeIndex = 0;
   long fExpectedNumberOfEvents = 0;
   float fTimeShift = fMinTime;
 
-  std::vector<JPetMCHit> fStoredMCHits; ///< save MC hits into single time window when it contains enough hits
   std::vector<JPetHit> fStoredHits;     ///< save RECONSTRUCTED MC hits into single time window when it contains enough hits
+  std::vector<JPetMCHit> fStoredMCHits; ///< save MC hits into single time window when it contains enough hits
+  std::vector<JPetMCDecayTree> fStoredMCDecayTrees;     ///< save RECONSTRUCTED MC decay trees into single time window when it contains enough hits
 
   void loadSmearingOptionsAndSetupExperimentalParametrizer();
 
   void processMCEvent(JPetGeantEventPack*);
   void saveHits();
+  void saveDecayTrees();
   void saveReconstructedHit(JPetHit recHit);
 
   void bookEfficiencyHistograms();

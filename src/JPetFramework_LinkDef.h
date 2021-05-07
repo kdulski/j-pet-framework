@@ -50,12 +50,12 @@
 #pragma link C++ class JPetTimeWindow + ;
 #pragma link C++ class JPetGeantScinHits + ;
 #pragma link C++ class JPetGeantDecayTree + ;
+#pragma link C++ class JPetGeantDecayTreeBranch + ;
 #pragma link C++ class JPetStatistics + ;
 #pragma link C++ class JPetTRB + ;
 #pragma link C++ class JPetDataSource + ;
 #pragma link C++ class JPetDataModule + ;
 #pragma link C++ class JPetBarrelSlot + ;
-#pragma link C++ class JPetGeantDecayTree + ;
 #pragma link C++ class JPetLayer + ;
 #pragma link C++ class JPetGeantEventInformation + ;
 #pragma link C++ class JPetMCHit + ;
@@ -66,7 +66,6 @@
 
 #pragma link C++ struct shapePoint + ;
 #pragma link C++ struct JPetScin::ScinDimensions + ;
-#pragma link C++ struct Branch + ;
 #pragma link C++ struct JPetTreeHeader::ProcessingStageInfo + ;
 
 #endif
