@@ -416,13 +416,8 @@ void JPetGeantParser::saveHits()
 
 void JPetGeantParser::saveDecayTrees()
 {
-  std::cout << fStoredMCDecayTrees.size() << std::endl;
-  for (unsigned i=0; i<fStoredMCDecayTrees.size(); i++) {
-    std::cout << fStoredMCDecayTrees.at(i).GetEventNumber() << std::endl;
-  }
   for (const auto& mcDecayTree : fStoredMCDecayTrees)
   {
-    std::cout << "p" << std::endl;
     dynamic_cast<JPetTimeWindowMC*>(fOutputEvents)->addDecayTree<JPetMCDecayTree>(mcDecayTree);
   }
   
