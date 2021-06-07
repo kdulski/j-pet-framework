@@ -14,7 +14,7 @@
  */
 
 #define BOOST_TEST_DYN_LINK
-#define BOOST_TEST_MODULE JPetTSlotTest
+#define BOOST_TEST_MODULE JPetTimeWindowTest
 
 #include "JPetTimeWindow/JPetTimeWindow.h"
 #include "JPetHit/JPetHit.h"
