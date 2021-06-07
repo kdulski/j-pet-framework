@@ -19,3 +19,17 @@
 ClassImp(JPetMCDecayTree);
 
 JPetMCDecayTree::JPetMCDecayTree() {}
+
+JPetMCDecayTree::~JPetMCDecayTree()
+{
+  fEventID = 0;
+  fDecayTreeBranchesIndex = 0;
+  fDecayChannel = DecayChannel::kUnknown;
+  fDecayTreeBranches.Clear("C");
+  fTrackBranchConnection.clear();
+}
+
+JPetMCDecayTree::JPetMCDecayTree(JPetGeantDecayTree* geantDecayTree)
+{
+  this->CopyDecayTree(geantDecayTree);
+}

@@ -21,8 +21,8 @@
 #include <TClonesArray.h>
 #include <TNamed.h>
 #include <iostream>
-#include <map>
 #include <vector>
+#include <map>
 
 /**
  * @brief Container class representing a time window of the DAQ system
@@ -46,7 +46,7 @@ public:
   JPetTimeWindowMC(const char* event_type, const char* mcHit_type, const char* decayTree_type) :
     JPetTimeWindow(event_type),
     fMCHits(mcHit_type, 2000),
-    fDecayTrees(decayTree_type, 2000)
+    fDecayTrees(decayTree_type, 1000)
   {}
 
   JPetTimeWindowMC(JPetTimeWindowMC const& other, JPetTimeWindow const& inner)

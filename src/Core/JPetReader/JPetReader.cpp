@@ -137,7 +137,6 @@ bool JPetReader::loadData(const char* treename)
     ERROR("in reading tree");
     return false;
   }
-  fTree->Print();
   TObjArray* arr = fTree->GetListOfBranches();
   fBranch = (TBranch*)(arr->At(0));
   if (!fBranch)

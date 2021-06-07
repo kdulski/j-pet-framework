@@ -20,8 +20,8 @@ ClassImp(JPetMCHit);
 
 JPetMCHit::JPetMCHit() {}
 
-JPetMCHit::JPetMCHit(UInt_t decayTreetId, UInt_t vertexId, float e, float t, const TVector3& pos, const TVector3& pol, const TVector3& mom)
-    : fMCDecayTreeIndex(decayTreetId), fMCVtxIndex(vertexId), fPolarization(pol), fMomentum(mom)
+JPetMCHit::JPetMCHit(UInt_t decayTreetId, UInt_t vertexId, UInt_t trackId, float e, float t, const TVector3& pos, const TVector3& pol, const TVector3& mom)
+    : fMCDecayTreeIndex(decayTreetId), fMCVtxIndex(vertexId), fMCTrackIndex(trackId), fPolarization(pol), fMomentum(mom)
 {
   setEnergy(e);
   setTime(t);
@@ -32,6 +32,8 @@ UInt_t JPetMCHit::getMCDecayTreeIndex() const { return fMCDecayTreeIndex; }
 
 UInt_t JPetMCHit::getMCVtxIndex() const { return fMCVtxIndex; }
 
+UInt_t JPetMCHit::getMCTrackIndex() const { return fMCTrackIndex; }
+
 const TVector3& JPetMCHit::getPolarization() const { return fPolarization; }
 
 const TVector3& JPetMCHit::getMomentum() const { return fMomentum; }
@@ -39,6 +41,8 @@ const TVector3& JPetMCHit::getMomentum() const { return fMomentum; }
 void JPetMCHit::setMCDecayTreeIndex(Int_t dti) { fMCDecayTreeIndex = dti; }
 
 void JPetMCHit::setMCVtxIndex(Int_t vi) { fMCVtxIndex = vi; }
+
+void JPetMCHit::setMCTrackIndex(Int_t ti) { fMCTrackIndex = ti; }
 
 void JPetMCHit::setPolarization(Int_t xx, Int_t yy, Int_t zz) { fPolarization.SetXYZ(xx, yy, zz); }
 

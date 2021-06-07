@@ -1,5 +1,5 @@
 /**
- *  @copyright Copyright 2018 The J-PET Framework Authors. All rights reserved.
+ *  @copyright Copyright 2021 The J-PET Framework Authors. All rights reserved.
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may find a copy of the License in the LICENCE file.
@@ -16,25 +16,29 @@
 #ifndef _JPETMCDECAYTREE_H_
 #define _JPETMCDECAYTREE_H_
 
-#include "./JPetHit/JPetHit.h"
+#include "JPetGeantDecayTreeBranch/JPetGeantDecayTreeBranch.h"
+#include "JPetGeantDecayTree/JPetGeantDecayTree.h"
+#include <TClonesArray.h>
+#include <map>
 
 /**
- * @brief Data class representing a hit of a photon in the scintillator strip based on Monte Carlo simulation.
- *
+ * @class JPetMCDecayTree
+ * @brief Class stores decay tree structures (in form of nodes and tracks)
  */
-class JPetMCDecayTree : public TObject {
 
+class JPetMCDecayTree : public JPetGeantDecayTree {
 public:
   JPetMCDecayTree();
+  ~JPetMCDecayTree();
+  JPetMCDecayTree(JPetGeantDecayTree* geantDecayTree);
 
 private:
-  UInt_t fMCMCDecayTreeIndex = 0u;
-  UInt_t fMCVtxIndex = 0u;
-
-  UInt_t fnVertices = 0u;
-  UInt_t fnTracks = 0u;
-  // add also track and vertices structures
-
+  int fEventID = 0;
+  DecayChannel fDecayChannel = DecayChannel::kUnknown;
+  std::map<int, int> fTrackBranchConnection = {};
+  TClonesArray fDecayTreeBranches;
+  unsigned int fDecayTreeBranchesIndex = 0;
+    
   ClassDef(JPetMCDecayTree, 2);
 };
 

@@ -188,6 +188,7 @@ set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Core/JPetAnalysisTools/JPetAnalysisTools
             ${CMAKE_CURRENT_SOURCE_DIR}/DataObjects/JPetSigCh/JPetSigCh.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/DataObjects/JPetTimeWindow/JPetTimeWindow.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/GeantParser/JPetGeantDecayTree/JPetGeantDecayTree.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/GeantParser/JPetGeantDecayTreeBranch/JPetGeantDecayTreeBranch.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/GeantParser/JPetGeantEventInformation/JPetGeantEventInformation.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/GeantParser/JPetGeantEventPack/JPetGeantEventPack.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/GeantParser/JPetGeantParser/JPetGeantParser.cpp
@@ -280,6 +281,7 @@ set(HEADERS_WITH_DICTIONARY_REQUIRED
   JPetMCDecayTree/JPetMCDecayTree.h
   JPetGeantScinHits/JPetGeantScinHits.h
   JPetGeantDecayTree/JPetGeantDecayTree.h
+  JPetGeantDecayTreeBranch/JPetGeantDecayTreeBranch.h
   JPetGeantEventPack/JPetGeantEventPack.h
   JPetGeantEventInformation/JPetGeantEventInformation.h
   )
