@@ -34,6 +34,7 @@ BOOST_AUTO_TEST_CASE(addMCDecayTree)
   JPetMCDecayTree mcDecayTree;
   test.add<JPetMCDecayTree>(mcDecayTree);
   BOOST_REQUIRE_EQUAL(test.getNumberOfEvents(), 1);
+  // test.getEvent<JPetMCDecayTree>(0).
   // double epsilon = 0.001;
   // BOOST_REQUIRE_CLOSE((dynamic_cast<const JPetSigCh&>(test[0])).getValue(), 1.2, epsilon);
   // BOOST_REQUIRE_CLOSE(test.getEvent<JPetSigCh>(1).getValue(), 1.5, epsilon);
