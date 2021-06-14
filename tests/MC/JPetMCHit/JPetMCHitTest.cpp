@@ -54,10 +54,11 @@ BOOST_AUTO_TEST_CASE(non_default_constructor)
   TVector3 momentum(1.0, -13.0, 13.0);
   auto MCDecayTreeIndex = 7u;
   auto MCVtxIndex = 99u;
+  auto trackID = 1u;
   auto energy = 5.5;
   auto time = 3.3;
   double epsilon = 0.0001;
-  JPetMCHit hit(MCDecayTreeIndex, MCVtxIndex, energy, time, position, polarization, momentum);
+  JPetMCHit hit(MCDecayTreeIndex, MCVtxIndex, trackID, energy, time, position, polarization, momentum);
   BOOST_REQUIRE_CLOSE(hit.getEnergy(), energy, epsilon);
   BOOST_REQUIRE_CLOSE(hit.getQualityOfEnergy(), 0.0f, epsilon);
   BOOST_REQUIRE_CLOSE(hit.getTime(), time, epsilon);
@@ -73,6 +74,7 @@ BOOST_AUTO_TEST_CASE(non_default_constructor)
   BOOST_REQUIRE_CLOSE(hit.getMomentum().Z(), momentum.Z(), epsilon);
   BOOST_REQUIRE_EQUAL(hit.getMCDecayTreeIndex(), MCDecayTreeIndex);
   BOOST_REQUIRE_EQUAL(hit.getMCVtxIndex(), MCVtxIndex);
+  BOOST_REQUIRE_EQUAL(hit.getMCTrackIndex(), trackID);
 }
 
 BOOST_AUTO_TEST_CASE(getters_setters_mc)

@@ -36,7 +36,7 @@ private:
   int fEventID = 0;
   DecayChannel fDecayChannel = DecayChannel::kUnknown;
   std::map<int, int> fTrackBranchConnection = {};
-  TClonesArray fDecayTreeBranches;
+  TClonesArray fDecayTreeBranches = {"JPetGeantDecayTreeBranch"};
   unsigned int fDecayTreeBranchesIndex = 0;
     
   ClassDef(JPetMCDecayTree, 2);
